@@ -37,7 +37,7 @@ export function Navbar() {
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:h-20 md:px-10">
         <Link to="/" className="flex items-center gap-3" aria-label="Zariaspa Trading Co.">
-          <img src={zariaspaLogo} alt="Zariaspa Trading Co." className="h-10 w-auto md:h-12" />
+          <img src={zariaspaLogo} alt="Zariaspa Trading Co." className="h-12 w-auto object-contain md:h-14 lg:h-16" />
         </Link>
 
 
