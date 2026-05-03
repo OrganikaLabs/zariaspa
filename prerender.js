@@ -19,7 +19,11 @@ async function prerender() {
     const files = fs.readdirSync(clientDir);
     for (const file of files) {
       if (file !== 'server') {
-        fs.cpSync(path.join(clientDir, file), path.join(distDir, file), { recursive: true });
+        const dest = path.join(distDir, file);
+        if (fs.existsSync(dest)) {
+          fs.rmSync(dest, { recursive: true, force: true });
+        }
+        fs.renameSync(path.join(clientDir, file), dest);
       }
     }
     // Clean up
