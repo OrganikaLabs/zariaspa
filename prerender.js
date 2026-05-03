@@ -18,8 +18,8 @@ async function prerender() {
     const distDir = path.join(process.cwd(), 'dist');
     const files = fs.readdirSync(clientDir);
     for (const file of files) {
-      if (file !== 'server') { // don't write over server dir just yet, copy safe
-        fs.renameSync(path.join(clientDir, file), path.join(distDir, file));
+      if (file !== 'server') {
+        fs.cpSync(path.join(clientDir, file), path.join(distDir, file), { recursive: true });
       }
     }
     // Clean up
@@ -27,10 +27,14 @@ async function prerender() {
     const serverDir = path.join(process.cwd(), 'dist/server');
     fs.rmSync(serverDir, { recursive: true, force: true });
     
-    console.log("Moved client assets to /dist for Vercel deployment.");
+    console.log("Copied client assets to /dist for Vercel deployment.");
   } else {
     console.error("Failed to prerender index.html", res.status, await res.text());
+    process.exit(1);
   }
 }
 
-prerender().catch(console.error);
+prerender().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
